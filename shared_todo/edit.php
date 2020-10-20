@@ -10,7 +10,9 @@ try {
 
   $TodoItems = new TodoItems();
   $listId = $TodoItems->selectId();
-  $TodoItem = $TodoItems->selectTodoItem($_POST['id']);
+  if (!empty($_POST['id'])) {
+    $TodoItem = $TodoItems->selectTodoItem($_POST['id']);
+  }
 
   if (!isset($_SESSION['user'])) {
     header('Location: ./login.php');
@@ -43,18 +45,12 @@ try {
       </tr>
       <tr>
         <td>
-          <?php if (isset($_SESSION['error_item_name'])) : ?>
-            <span style="color: #ff0000;"><?= $_SESSION['error_item_name'] ?></span>
+          <?php if (isset($_SESSION['error_val'])) : ?>
+            <span style="color: #ff0000;"><?= $_SESSION['error_val'] ?></span>
           <?php endif ?>
         </td>
       </tr>
-      <tr>
-        <td>
-          <?php if (isset($_SESSION['error_expire_date'])) : ?>
-            <span style="color: #ff0000;"><?= $_SESSION['error_expire_date'] ?></span>
-          <?php endif ?>
-        </td>
-      </tr>
+
       <form action="./edit_action.php" method="POST">
         <input type="hidden" name="token" value="<?= $token ?>">
         <input type="hidden" name="id" value="<?= $TodoItem[0]['id'] ?>">

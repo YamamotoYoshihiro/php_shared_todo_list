@@ -41,18 +41,12 @@ try {
     </tr>
     <tr>
       <td>
-        <?php if (isset($_SESSION['error_item_name'])) : ?>
-          <span style="color: #ff0000;"><?= $_SESSION['error_item_name'] ?></span>
+        <?php if (isset($_SESSION['error_val'])) : ?>
+          <span style="color: #ff0000;"><?= $_SESSION['error_val'] ?></span>
         <?php endif ?>
       </td>
     </tr>
-    <tr>
-      <td>
-        <?php if (isset($_SESSION['error_expire_date'])) : ?>
-          <span style="color: #ff0000;"><?= $_SESSION['error_expire_date'] ?></span>
-        <?php endif ?>
-      </td>
-    </tr>
+
 
     <form action="./entry_action.php" method="POST">
       <input type="hidden" name="token" value="<?= $token ?>">

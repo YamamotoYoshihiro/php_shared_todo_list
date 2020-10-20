@@ -17,8 +17,6 @@ try {
     //ワンタイムトークン発行
     $token = bin2hex(openssl_random_pseudo_bytes(32));
     $_SESSION['token'] = $token;
-    // $_POST['keywords'] = 'ああ　い a';
-    // var_dump($_POST['keywords']);
     $keyword = $_POST['keywords'];
     //半角、全角空白を識別して言葉を分割する
     $keywords[] = preg_split('/[\p{Z}\p{Cc}]++/u', $keyword, -1, PREG_SPLIT_NO_EMPTY);
@@ -242,8 +240,5 @@ try {
 <?php
 } catch (Exception $e) {
     header('Location: error.php');
-    echo '<pre>';
-    var_dump($e);
-    echo '</pre>';
 }
 ?>
