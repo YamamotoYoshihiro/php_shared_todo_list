@@ -1,4 +1,7 @@
 <?php
+/**
+ * sqlに接続する class
+ */
 class Base
 {
     const DB_NAME = 'todo';

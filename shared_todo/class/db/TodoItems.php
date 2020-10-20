@@ -2,6 +2,9 @@
 require_once('Base.php');
 class TodoItems extends Base
 {
+    /**
+     * コンストラクタ
+     */
     public function __construct()
     {
         parent::__construct();
@@ -14,6 +17,13 @@ class TodoItems extends Base
         $listId = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $listId;
     }
+
+    /**
+     * Undocumented function
+     *
+     * @param [int] $id
+     * @return TODOリストに登録したものの一つ
+     */
     public function selectTodoItem($id)
     {
         $sql = 'SELECT todo_items.id, users.user, todo_items.user_id, todo_items.item_name, todo_items.expire_date, 
@@ -63,7 +73,7 @@ class TodoItems extends Base
     {
         $sql = 'UPDATE todo_items SET user_id=:user_id, item_name=:item_name, expire_date=:expire_date, finished_date=:finished_date
         WHERE id=:id';
-        
+
         // -- users LEFT OUTER JOIN todo_items on users.id = todo_items.user_id 
         // -- set todo_items.id=:id, todo_items.user_id, todo_items.item_name=:item_name, todo_items.expire_date=:expire_date, 
         // -- todo_items.finished_date=:finished_date WHERE todo_items.id=:id';
