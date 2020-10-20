@@ -11,10 +11,6 @@ try {
   $TodoItems = new TodoItems();
   $listId = $TodoItems->selectId();
   $TodoItem = $TodoItems->selectTodoItem($_POST['id']);
-  // echo "<pre>";
-  // var_dump($TodoItem);
-  // echo "</pre>";
-  // var_dump($TodoItem[0]);
 
   if (!isset($_SESSION['user'])) {
     header('Location: ./login.php');
@@ -30,7 +26,6 @@ try {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous"> -->
   <title>shared todo</title>
 </head>
 
@@ -78,12 +73,7 @@ try {
           <td>
             <select name="user_id">
               <?php foreach ($listId as $key => $value) : ?>
-                <option value="<?= $value['id'] ?>" 
-                <?php if (!empty($TodoItem[0]['expire_date']) && $TodoItem[0]['user_id'] == $value['id']) echo 'selected' ?>>
-                  <!-- <?php
-                        var_dump($TodoItem[0]['user_id']);
-                        var_dump($value['id']);
-                        ?> -->
+                <option value="<?= $value['id'] ?>" <?php if (!empty($TodoItem[0]['expire_date']) && $TodoItem[0]['user_id'] == $value['id']) echo 'selected' ?>>
                   <?= $value['user'] ?>
                 </option>
               <?php endforeach ?>

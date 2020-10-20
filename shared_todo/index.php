@@ -6,14 +6,11 @@ require_once('./class/db/TodoItems.php');
 
 $token = bin2hex(openssl_random_pseudo_bytes(32));
 $_SESSION['token'] = $token;
-// var_dump($_SESSION['user']);
+
 //インスタンス化
 $TodoItems = new TodoItems();
 $list = $TodoItems->selectJoin();
-// echo '<pre>';
-// var_dump($_SESSION);
-// echo '</pre>';
-// 
+
 if (!isset($_SESSION['user'])) {
     header('Location: ./login.php');
 }

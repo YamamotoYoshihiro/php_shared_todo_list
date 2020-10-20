@@ -13,7 +13,6 @@ if (!isset($_SESSION['user'])) {
 }
 $TodoItems = new TodoItems();
 $TodoItem = $TodoItems->selectTodoItem($_POST['id']);
-// var_dump($_POST['id']);
 ?>
 <!DOCTYPE html>
 <html lang="jp">

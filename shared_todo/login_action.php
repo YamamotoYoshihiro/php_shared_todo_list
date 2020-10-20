@@ -16,9 +16,6 @@ try {
   $Users = new Users();
 
   $ret = $Users->login($_POST['user']);
-  // echo "<pre>";
-  // var_dump($ret);
-  // echo "</pre>";
 
   //3回以上ログインできないとerror.phpへ
   if (isset($_SESSION["loginCount"]) == true) {
@@ -50,7 +47,4 @@ try {
   }
 } catch (Exception $e) {
   header('Location: ./error.php');
-  // echo "<pre>";
-  // var_dump($e);
-  // echo "</pre>";
 }

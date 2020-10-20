@@ -77,7 +77,6 @@ try {
             } else {
                 $finished_date = null;
             }
-            // var_dump(isset($_POST['check']));
             $TodoItems->update($_POST['id'], $_POST['user_id'], $_POST['item_name'], $_POST['expire_date'], $finished_date);
             header('Location: ./index.php');
             exit;
@@ -92,8 +91,5 @@ try {
         }
     }
 } catch (exception $e) {
-    // header('Location: error.php');
-    echo '<pre>';
-    var_dump($e);
-    echo '</pre>';
+    header('Location: error.php');
 }

@@ -4,7 +4,6 @@ session_regenerate_id();
 require_once('./class/db/Base.php');
 require_once('./class/db/TodoItems.php');
 
-// var_dump($_POST['user_id']);
 try {
     if (!isset($_SESSION['user'])) {
         header('Location: ./login.php');
@@ -69,7 +68,7 @@ try {
     }
 
     if ($item_name <= 10 && $item_name > 0) {
-    //バリデーションOKなら$_SESSION['error_item_name']を空にする。
+        //バリデーションOKなら$_SESSION['error_item_name']を空にする。
         $_SESSION['error_item_name'] = '';
         //年、月、日をlist関数で分割
         list($Y, $m, $d) = explode('-', $expire_date);
@@ -97,6 +96,5 @@ try {
         }
     }
 } catch (exception $e) {
-    // header('Location:error.php');
-    var_dump($e);
+    header('Location:error.php');
 }

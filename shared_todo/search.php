@@ -22,22 +22,12 @@ try {
     $keyword = $_POST['keywords'];
     //半角、全角空白を識別して言葉を分割する
     $keywords[] = preg_split('/[\p{Z}\p{Cc}]++/u', $keyword, -1, PREG_SPLIT_NO_EMPTY);
-    // echo '<pre>';
-    // var_dump($keywords);
-    // echo '</pre>';
     foreach ($keywords as $key => $value) {
-        // echo '<pre>';
-        // var_dump($keywords);
-        // echo '</pre>';
         foreach ($value as $v1) {
-            // echo '<pre>';
-            // var_dump($v1);
-            // echo '</pre>';
             $keywordCondition[] = "todo_items.item_name LIKE '%" . $v1 . "%'";
         }
     }
     $keywordSearch = implode(' OR ', $keywordCondition);
-    // var_dump($keywordSearch);
     $Todoitems = new TodoItems;
     $list = $Todoitems->search($keywordSearch);
 ?>
@@ -90,17 +80,8 @@ try {
                     <td width="150"></td>
                     <td>
                         <form action="./search.php" method="post">
-                            <?php foreach ($list as $k => $v) : ?>
-                                <input type="hidden" name="token" value="<?= $token ?>">
-                                <input type="hidden" name="item_name" value="<?= $v['item_name'] ?>">
-                                <input type="hidden" name="family_name" value="<?= $v['family_name'] ?>">
-                                <input type="hidden" name="first_name" value="<?= $v['first_name'] ?>">
-                                <input type="hidden" name="registration_date" value="<?= $v['registration_date'] ?>">
-                                <input type="hidden" name="expire_date" value="<?= $v['expire_date'] ?>">
-                                <input type="hidden" name="finished_date" value="<?= $v['finished_date'] ?>">
-                            <?php endforeach ?>
-                            <input type="text" name="keywords" value="">
                             <input type="hidden" name="token" value="<?= $token ?>">
+                            <input type="text" name="keywords" value="">
                             <input type="submit" class="btn" value="検索">
                         </form>
                     </td>
@@ -116,11 +97,8 @@ try {
                     <th>完了日</th>
                     <th>操作</th>
                 </tr>
-                <!-- <pre><?php var_dump($list) ?></pre> -->
                 <?php foreach ($list as $k => $v) : ?>
-                    <!-- <pre><?php var_dump($v) ?></pre> -->
                     <?php foreach (array($k) as $value) : ?>
-                        <!-- <pre><?php var_dump($k) ?></pre> -->
                         <?php if ($value % 2 == 1) : ?>
                             <tr style="background-color:#CCCCFF">
                                 <?php if ($v['expire_date'] < date('Y-m-d') && !isset($v['finished_date'])) : ?>
@@ -237,29 +215,17 @@ try {
                             <form action="./done.php" method="POST">
                                 <input type="hidden" name="token" value="<?= $token ?>">
                                 <input type="hidden" name="id" value="<?= $v["id"] ?>">
-                                <button name="done" value="完了" ?>完了</button>
+                                <input type="submit" name="done" value="完了" ?>
                             </form>
                             <form action="./edit.php" method="POST">
                                 <input type="hidden" name="token" value="<?= $token ?>">
                                 <input type="hidden" name="id" value="<?= $v['id'] ?>">
-                                <input type="hidden" name="user" value="<?= $v['user'] ?>">
-                                <input type="hidden" name="item_name" value="<?= $v['item_name'] ?>">
-                                <input type="hidden" name="registration_date" value="<?= $v['registration_date'] ?>">
-                                <input type="hidden" name="expire_date" value="<?= $v['expire_date'] ?>">
-                                <input type="hidden" name="finished_date" value="<?= $v['finished_date'] ?>">
-                                <button name="update" value="更新">更新</button>
+                                <input type="submit" name="update" value="更新">
                             </form>
                             <form action="./delete.php" method="POST">
                                 <input type="hidden" name="token" value="<?= $token ?>">
-                                <input type="hidden" name="user_id" value="<?= $v["user_id"] ?>">
                                 <input type="hidden" name="id" value="<?= $v["id"] ?>">
-                                <input type="hidden" name="is_deleted" value="<?= $v['is_deleted'] ?>">
-                                <input type="hidden" name="user" value="<?= $v['user'] ?>">
-                                <input type="hidden" name="item_name" value="<?= $v['item_name'] ?>">
-                                <input type="hidden" name="registration_date" value="<?= $v['registration_date'] ?>">
-                                <input type="hidden" name="expire_date" value="<?= $v['expire_date'] ?>">
-                                <input type="hidden" name="finished_date" value="<?= $v['finished_date'] ?>">
-                                <button name="delete" value="削除">削除</button>
+                                <input type="submit" name="delete" value="削除">
                             </form>
                         </td>
                             </tr>
