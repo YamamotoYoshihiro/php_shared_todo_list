@@ -1,4 +1,5 @@
 <?php
+
 /**
  * sqlに接続する class
  */
@@ -12,12 +13,8 @@ class Base
 
     public function __construct()
     {
-        try {
-            $dsn = "mysql:dbname=" . self::DB_NAME . ";host=" . self::HOST . ";charset=utf8";
-            $this->dbh = new PDO($dsn, self::USER, self::PASS);
-            $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (Exception $e) {
-            header("Location: ./error.php");
-        }
+        $dsn = "mysql:dbname=" . self::DB_NAME . ";host=" . self::HOST . ";charset=utf8";
+        $this->dbh = new PDO($dsn, self::USER, self::PASS);
+        $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 }

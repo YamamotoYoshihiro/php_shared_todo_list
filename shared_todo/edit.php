@@ -20,7 +20,6 @@ try {
 } catch (Exception $e) {
     header('Location: ./error.php');
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="jp">
@@ -45,8 +44,15 @@ try {
             </tr>
             <tr>
                 <td>
-                    <?php if (isset($_SESSION['error_val'])) : ?>
-                        <span style="color: #ff0000;"><?= $_SESSION['error_val'] ?></span>
+                    <?php if (isset($_SESSION['error_item_name'])) : ?>
+                        <span style="color: #ff0000;"><?= $_SESSION['error_item_name'] ?></span>
+                    <?php endif ?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <?php if (isset($_SESSION['error_expire_date'])) : ?>
+                        <span style="color: #ff0000;"><?= $_SESSION['error_expire_date'] ?></span>
                     <?php endif ?>
                 </td>
             </tr>

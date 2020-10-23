@@ -27,56 +27,46 @@ try {
         list($Y, $m, $d) = explode('-', $expire_date);
     }
 
-    //入力バリデーションチェック($_POST['item_name]が空欄の時)
-    if (empty($_POST['item_name']) && empty($_POST['expire_date'])) {
-        $_SESSION['error_val'] = '※項目名、日付を入力してください';
-        header('Location:./edit.php');
-        exit;
-    } elseif (empty($_POST['item_name']) && checkdate($m, $d, $Y) == false) {
-        $_SESSION['error_val'] = '※項目名を入力してください<br>正しい日付を入力してください。例 Year-month-day';
-        exit;
-    } elseif (empty($_POST['item_name']) && checkdate($m, $d, $Y) == true) {
-        $_SESSION['error_val'] = '※項目名を入力してください';
-        header('Location:./edit.php');
-        exit;
+    //入力バリデーションチェック
+    if ($item_name <= 100 && $item_name !== 0) {
+        $_SESSION['error_item_name'] = '';
+        $val = true;
     }
-    //バリデーションチェック($_POST['item_name]が文字数オーバーの時)
-    if ($item_name > 100 && empty($_POST['expire_date'])) {
-        $_SESSION['error_val'] = '※項目名は100字以内で入力してください<br>日付を入力してください';
-        header('Location:./edit.php');
-        exit;
-    } elseif ($item_name > 100 && checkdate($m, $d, $Y) == false) {
-        $_SESSION['error_val'] = '※項目名は100文字以内で入力してください<br>正しい日付を入力してください。例 Year-month-day';
-        header('Location:./edit.php');
-        exit;
-    } elseif ($item_name > 100 && checkdate($m, $d, $Y) == true) {
-        $_SESSION['error_val'] = '※項目名は100字以内で入力してください';
-        header('Location:./edit.php');
-        exit;
+    if (checkdate($m, $d, $Y) == true) {
+        $_SESSION['error_expire_date'] = '';
+        $val = true;
     }
-    //バリデーションチェック($_POST['item_name]がOKの時)
-    if ($item_name <= 100 && empty($_POST['expire_date'])) {
-        $_SESSION['error_val'] = '※日付を入力してください';
-        header(('Location: ./entry.php'));
-        exit;
-    } elseif ($item_name <= 100 && checkdate($m, $d, $Y) == false) {
-        $_SESSION['error_val'] = '※正しい日付を入力してください。例 Year-month-day';
+    if (empty($_POST['item_name'])) {
+        $_SESSION['error_item_name'] = '※項目内容を入力してください';
+        $val = false;
+    }
+    if (empty($_POST['expire_date'])) {
+        $_SESSION['error_expire_date'] = '※日付を入力してください';
+        $val = false;
+    }
+    if ($item_name > 100) {
+        $_SESSION['error_item_name'] = '※項目は100文字以内で入力してください';
+        $val = false;
+    }
+    if (checkdate($m, $d, $Y) == false) {
+        $_SESSION['error_expire_date'] = '※正しい日付を入力してください';
+        $val = false;
+    }
+
+    if ($val == false) {
         header('Location: ./entry.php');
         exit;
-    } elseif ($item_name <= 100 && checkdate($m, $d, $Y) == true) {
-        //バリデーションチェックOKなら$_SESSION['error_val']を空にする。
-        $_SESSION['error_val'] = '';
-        //完了ボタンにチェックが入っていればその日を格納。チェックされていなければnull
+    } elseif ($val == true) {
+        //完了ボタンにチェックが入っていればその日を格納
         if (isset($_POST['check']) == true) {
             $finished_date = date('Y-m-d');
         } else {
             $finished_date = null;
         }
-        //POSTされてきた値を更新する。
-        $TodoItems->insert($_POST['user_id'], $_POST['item_name'], $_POST['registration_date'], $expire_date, $finished_date);
+        $TodoItems->update($_POST['id'], $_POST['user_id'], $_POST['item_name'], $expire_date, $finished_date);
         header('Location: ./index.php');
         exit;
     }
 } catch (exception $e) {
-    header('Location:error.php');
+    header('Location: error.php');
 }

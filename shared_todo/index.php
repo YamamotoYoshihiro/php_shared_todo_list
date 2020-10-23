@@ -14,6 +14,7 @@ $list = $TodoItems->selectJoin();
 if (!isset($_SESSION['user'])) {
     header('Location: ./login.php');
 }
+var_dump($_SESSION['error_item_name']);
 ?>
 
 <!DOCTYPE html>

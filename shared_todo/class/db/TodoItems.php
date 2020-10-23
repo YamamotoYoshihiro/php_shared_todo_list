@@ -44,18 +44,15 @@ class TodoItems extends Base
         $stmt = $this->dbh->prepare($sql);
         $stmt->execute();
         $list = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        // var_dump($list);
         return $list;
     }
     public function updateById($id, $finished_date)
     {
         $sql = 'UPDATE todo_items SET finished_date=:finished_date WHERE id=:id';
-        // var_dump($sql);
         $stmt = $this->dbh->prepare($sql);
         $stmt->bindValue(":id", $id, PDO::PARAM_INT);
         $stmt->bindValue(":finished_date", $finished_date, PDO::PARAM_STR);
         $stmt->execute();
-        var_dump($finished_date);
     }
     public function insert($user_id, $item_name, $registration_date, $expire_date, $finished_date)
     {
@@ -73,19 +70,13 @@ class TodoItems extends Base
     {
         $sql = 'UPDATE todo_items SET user_id=:user_id, item_name=:item_name, expire_date=:expire_date, finished_date=:finished_date
         WHERE id=:id';
-
-        // -- users LEFT OUTER JOIN todo_items on users.id = todo_items.user_id 
-        // -- set todo_items.id=:id, todo_items.user_id, todo_items.item_name=:item_name, todo_items.expire_date=:expire_date, 
-        // -- todo_items.finished_date=:finished_date WHERE todo_items.id=:id';
         $stmt = $this->dbh->prepare($sql);
-        // var_dump($sql);
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
         $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->bindValue(':item_name', $item_name, PDO::PARAM_STR);
         $stmt->bindValue(":expire_date", $expire_date, PDO::PARAM_STR);
         $stmt->bindValue(":finished_date", $finished_date, PDO::PARAM_STR);
         $stmt->execute();
-        // var_dump($stmt->execute());
     }
     public function updateByDeleted($id, $is_deleted)
     {
@@ -101,12 +92,9 @@ class TodoItems extends Base
         $sql = "SELECT *
         FROM users LEFT OUTER JOIN todo_items on users.id = todo_items.user_id 
         WHERE $keywordSearch AND todo_items.is_deleted=0 order by expire_date ASC";
-        // var_dump($sql);
         $stmt = $this->dbh->prepare($sql);
-        // $stmt->bindValue(":keywordSearch", $keywordSearch, PDO::PARAM_STR);
         $stmt->execute();
         $list = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        // var_dump($list);
         return $list;
     }
 }
